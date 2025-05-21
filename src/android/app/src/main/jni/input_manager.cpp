@@ -221,7 +221,7 @@ ButtonFactory::ButtonFactory()
 std::unique_ptr<Input::ButtonDevice> ButtonFactory::Create(const Common::ParamPackage& params) {
     if (params.Has("axis")) {
         const int axis_id = params.Get("axis", 0);
-        const float threshold = params.Get("threshold", 0.5f);
+        const float threshold = params.Get("threshold", 0.1f);
         const std::string direction_name = params.Get("direction", "");
         bool trigger_if_greater;
         if (direction_name == "+") {
@@ -290,10 +290,10 @@ std::string GenerateAnalogButtonParamPackage(int axis, float axis_val) {
     };
     if (axis_val > 0) {
         param.Set("direction", "+");
-        param.Set("threshold", "0.5");
+        param.Set("threshold", "0.1");
     } else {
         param.Set("direction", "-");
-        param.Set("threshold", "-0.5");
+        param.Set("threshold", "-0.1");
     }
 
     return param.Serialize();

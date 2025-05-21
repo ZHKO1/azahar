@@ -740,7 +740,7 @@ public:
 
         if (params.Has("axis")) {
             const int axis = params.Get("axis", 0);
-            const float threshold = params.Get("threshold", 0.5f);
+            const float threshold = params.Get("threshold", 0.1f);
             const std::string direction_name = params.Get("direction", "");
             bool trigger_if_greater;
             if (direction_name == "+") {
@@ -896,10 +896,10 @@ Common::ParamPackage SDLEventToButtonParamPackage(SDLState& state, const SDL_Eve
         params.Set("axis", event.jaxis.axis);
         if (event.jaxis.value > 0) {
             params.Set("direction", "+");
-            params.Set("threshold", "0.5");
+            params.Set("threshold", "0.1");
         } else {
             params.Set("direction", "-");
-            params.Set("threshold", "-0.5");
+            params.Set("threshold", "-0.1");
         }
         break;
     }
@@ -976,7 +976,7 @@ public:
                     // needed
                     if (std::abs(
                             (event.jaxis.value - axis_memory[event.jaxis.which][event.jaxis.axis]) /
-                            32767.0) < 0.5) {
+                            32767.0) < 0.1) {
                         break;
                     } else {
                         if (axis_event_count[event.jaxis.which][event.jaxis.axis] == 2 &&
@@ -1036,7 +1036,7 @@ public:
     Common::ParamPackage GetNextInput() override {
         SDL_Event event{};
         while (state.event_queue.Pop(event)) {
-            if (event.type != SDL_JOYAXISMOTION || std::abs(event.jaxis.value / 32767.0) < 0.5) {
+            if (event.type != SDL_JOYAXISMOTION || std::abs(event.jaxis.value / 32767.0) < 0.1) {
                 continue;
             }
             // An analog device needs two axes, so we need to store the axis for later and wait for
